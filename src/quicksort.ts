@@ -41,12 +41,12 @@ export function quicksort<V>(array: V[], compare: (a: V, b: V) => number) {
 		const smallerOrEqValues = array.slice(start, finalPivotPosition);
 		const largerValues = array.slice(finalPivotPosition + 1, end + 1);
 		for (const v of smallerOrEqValues) {
-			if (v > pivotValue) {
+			if (compare(v, pivotValue) > 0) {
 				throw new Error(`Invalid partial sorting because ${v} > ${pivotValue}`);
 			}
 		}
 		for (const v of largerValues) {
-			if (v <= pivotValue) {
+			if (compare(v, pivotValue) <= 0) {
 				throw new Error(
 					`Invalid partial sorting because ${v} <= ${pivotValue}`
 				);
