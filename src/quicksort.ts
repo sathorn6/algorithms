@@ -58,5 +58,5 @@ export function quicksort<V>(array: V[], compare: (a: V, b: V) => number) {
 		sort(finalPivotPosition + 1, end);
 	};
 
-	return sort(0, array.length - 1);
+	sort(0, array.length - 1);
 }
