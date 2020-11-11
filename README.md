@@ -9,3 +9,4 @@ You probably don't want to use this in production.
 - heap.ts: [Binary Heap](https://en.wikipedia.org/wiki/Binary_heap)
 - quicksort.ts: [Quicksort](https://en.wikipedia.org/wiki/Quicksort)
 - huffman.ts: [Huffman Coding](https://en.wikipedia.org/wiki/Huffman_coding)
+- lru.ts: [Least Recently Used Cache](https://www.geeksforgeeks.org/lru-cache-implementation/)
