@@ -27,7 +27,9 @@ export class LRUCache<K, V> {
 	public set(key: K, value: V) {
 		if (this.nodes.has(key)) {
 			// Just update the node
-			this.nodes.get(key)!.data.value = value;
+			const node = this.nodes.get(key)!;
+			node.data.value = value;
+			this.queue.moveToEnd(node);
 			return;
 		}
 
