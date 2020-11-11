@@ -1,15 +1,11 @@
-interface Node<K, V> {
-	prev?: Node<K, V>;
-	next?: Node<K, V>;
+interface KeyValuePair<K, V> {
 	key: K;
 	value: V;
 }
 
 export class LRUCache<K, V> {
-	private nodes = new Map<K, Node<K, V>>();
-	private head?: Node<K, V>;
-	private tail?: Node<K, V>;
-	private size = 0;
+	private queue = new DoublyLinkedDeque<KeyValuePair<K, V>>();
+	private nodes = new Map<K, Node<KeyValuePair<K, V>>>();
 
 	constructor(private capacity: number) {
 		if (capacity < 1) {
@@ -23,60 +19,90 @@ export class LRUCache<K, V> {
 			return undefined;
 		}
 
-		// If node is not last already
-		if (node.next) {
-			// Remove it from the queue
-			node.next.prev = node.prev;
-			if (node.prev) {
-				node.prev.next = node.next;
-			}
-			if (node === this.head) {
-				this.head = node.next;
-			}
+		this.queue.moveToEnd(node);
 
-			// Move to the end
-			node.prev = this.tail;
-			node.next = undefined;
-			this.tail!.next = node;
-			this.tail = node;
-		}
-
-		return node.value;
+		return node.data.value;
 	}
 
 	public set(key: K, value: V) {
 		if (this.nodes.has(key)) {
 			// Just update the node
-			this.nodes.get(key)!.value = value;
+			this.nodes.get(key)!.data.value = value;
 			return;
 		}
 
-		const node: Node<K, V> = {
-			key,
-			value,
-		};
+		const node = this.queue.append({ key, value });
 		this.nodes.set(key, node);
 
-		// Handle first insert
+		if (this.nodes.size > this.capacity) {
+			// Evict LRU
+			const evicted = this.queue.dequeue()!;
+			this.nodes.delete(evicted.data.key);
+		}
+	}
+}
+
+interface Node<T> {
+	prev?: Node<T>;
+	next?: Node<T>;
+	data: T;
+}
+
+class DoublyLinkedDeque<T> {
+	private head?: Node<T>;
+	private tail?: Node<T>;
+
+	public append(data: T): Node<T> {
+		const node: Node<T> = {
+			data,
+		};
+
 		if (!this.tail) {
+			// First insert
 			this.head = node;
-			this.tail = node;
-			this.size = 1;
+		} else {
+			// Append node to end of queue
+			this.tail.next = node;
+			node.prev = this.tail;
+		}
+		this.tail = node;
+
+		return node;
+	}
+
+	public dequeue(): Node<T> | null {
+		if (!this.head) {
+			return null;
+		}
+
+		const head = this.head;
+		if (this.head.next) {
+			this.head.next.prev = undefined;
+		}
+		this.head = this.head.next;
+
+		return head;
+	}
+
+	public moveToEnd(node: Node<T>) {
+		if (!node.next) {
+			// Node is already at the end
 			return;
 		}
 
-		// Append node to end of queue
-		this.tail.next = node;
-		node.prev = this.tail;
-		this.tail = node;
-		this.size++;
-
-		if (this.size > this.capacity) {
-			// Evict LRU
-			this.head!.next!.prev = undefined;
-			this.nodes.delete(this.head!.key);
-			this.head = this.head!.next;
-			this.size--;
+		// Remove it from the queue
+		node.next.prev = node.prev;
+		if (node.prev) {
+			node.prev.next = node.next;
 		}
+		if (node === this.head) {
+			this.head = node.next;
+		}
+
+		// Move to the end
+		node.prev = this.tail;
+		node.next = undefined;
+		this.tail!.next = node;
+		this.tail = node;
 	}
 }
