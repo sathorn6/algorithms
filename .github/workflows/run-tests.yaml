@@ -12,3 +12,4 @@ jobs:
           node-version: 12
       - run: yarn
       - run: yarn test
+      - run: yarn format:check
