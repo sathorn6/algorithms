@@ -22,6 +22,24 @@ describe("Market", () => {
 				{ sellOrderId: 1, buyOrderId: 2, quantity: 10, price: 5 },
 			]);
 		});
+		it("doesn't fill the buy order above price limit", () => {
+			const market = new Market();
+
+			market.processOrder({
+				type: "limit",
+				side: "sell",
+				quantity: 10,
+				limit: 10,
+			});
+			const result = market.processOrder({
+				type: "limit",
+				side: "buy",
+				quantity: 10,
+				limit: 5,
+			});
+
+			expect(result.executedTrades).toEqual([]);
+		});
 		it("partially fills a sell order with a buy order", () => {
 			const market = new Market();
 
@@ -227,6 +245,24 @@ describe("Market", () => {
 			expect(result.executedTrades).toEqual([
 				{ sellOrderId: 2, buyOrderId: 1, quantity: 10, price: 10 },
 			]);
+		});
+		it("doesn't fill the sell order below price limit", () => {
+			const market = new Market();
+
+			market.processOrder({
+				type: "limit",
+				side: "buy",
+				quantity: 10,
+				limit: 5,
+			});
+			const result = market.processOrder({
+				type: "limit",
+				side: "sell",
+				quantity: 10,
+				limit: 10,
+			});
+
+			expect(result.executedTrades).toEqual([]);
 		});
 		it("partially fills a buy order with a sell order", () => {
 			const market = new Market();

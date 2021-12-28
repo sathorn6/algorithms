@@ -20,6 +20,14 @@ describe("DynamicBitArray", () => {
 		expect(array.getSize()).toBe(3);
 	});
 
+	it("throws an error if getting an index out of range", () => {
+		const array = new DynamicBitArray();
+
+		array.push(1);
+
+		expect(() => array.get(2)).toThrow("Index 2 out of range.");
+	});
+
 	it("grows to store more bits", () => {
 		const array = new DynamicBitArray();
 		const bits = [];

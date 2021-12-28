@@ -84,6 +84,14 @@ describe("Heap", () => {
 		expect(heap.pop()).toBe(3);
 	});
 
+	it("adds the element instead of replacing when empty", () => {
+		const heap = new Heap([], compareNumbers);
+
+		heap.replaceTop(1);
+
+		expect(heap.pop()).toBe(1);
+	});
+
 	it("can pushAndPop", () => {
 		const heap = new Heap([4, 2, 5], compareNumbers);
 
