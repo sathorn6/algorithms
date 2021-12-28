@@ -1,4 +1,4 @@
-import { Heap } from "./heap";
+import { Heap } from "./Heap";
 
 type Quantity = number;
 type Price = number;

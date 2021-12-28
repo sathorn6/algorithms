@@ -1,4 +1,4 @@
-import { Heap } from "../heap";
+import { Heap } from "../Heap";
 
 describe("Heap", () => {
 	const compareNumbers = (a: number, b: number) => a - b;

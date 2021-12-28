@@ -1,4 +1,4 @@
-import { byteFrequencies, HuffmanTree } from "../huffman";
+import { byteFrequencies, HuffmanTree } from "../HuffmanTree";
 
 const data = Uint8Array.from([10, 20, 10, 20, 10, 20, 10, 20, 30, 10, 30]);
 

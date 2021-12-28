@@ -1,5 +1,5 @@
 import { DynamicBitArray } from "./DynamicBitArray";
-import { Heap } from "./heap";
+import { Heap } from "./Heap";
 
 class InternalNode {
 	constructor(public zero: Node, public one: Node) {}
