@@ -1,4 +1,4 @@
-import { quicksort } from "../quicksort";
+import { quicksort } from "./quicksort";
 
 describe("quicksort", () => {
 	const compareNumbers = (a: number, b: number) => a - b;

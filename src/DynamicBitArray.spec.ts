@@ -1,4 +1,4 @@
-import { Bit, DynamicBitArray } from "../DynamicBitArray";
+import { Bit, DynamicBitArray } from "./DynamicBitArray";
 
 describe("DynamicBitArray", () => {
 	it("starts empty", () => {

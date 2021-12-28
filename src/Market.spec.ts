@@ -1,4 +1,4 @@
-import { Market } from "../Market";
+import { Market } from "./Market";
 
 describe("Market", () => {
 	describe("buy limit order", () => {

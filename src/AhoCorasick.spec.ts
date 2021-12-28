@@ -1,4 +1,4 @@
-import { AhoCorasick } from "../AhoCorasick";
+import { AhoCorasick } from "./AhoCorasick";
 
 describe("AhoCorasick", () => {
 	it("finds matches", () => {

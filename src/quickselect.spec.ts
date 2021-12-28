@@ -1,4 +1,4 @@
-import { quickselect } from "../quickselect";
+import { quickselect } from "./quickselect";
 
 describe("quickselect", () => {
 	const compareNumbers = (a: number, b: number) => a - b;

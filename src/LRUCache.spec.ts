@@ -1,4 +1,4 @@
-import { LRUCache } from "../LRUCache";
+import { LRUCache } from "./LRUCache";
 
 describe("LRUCache", () => {
 	it("will not construct with a capacity of 0", () => {
