@@ -37,22 +37,6 @@ export function quicksort<V>(array: V[], compare: (a: V, b: V) => number) {
 		const finalPivotPosition = nextDestForLarger + 1;
 		swap(end, finalPivotPosition);
 
-		// Check for bugs
-		const smallerOrEqValues = array.slice(start, finalPivotPosition);
-		const largerValues = array.slice(finalPivotPosition + 1, end + 1);
-		for (const v of smallerOrEqValues) {
-			if (compare(v, pivotValue) > 0) {
-				throw new Error(`Invalid partial sorting because ${v} > ${pivotValue}`);
-			}
-		}
-		for (const v of largerValues) {
-			if (compare(v, pivotValue) <= 0) {
-				throw new Error(
-					`Invalid partial sorting because ${v} <= ${pivotValue}`
-				);
-			}
-		}
-
 		// Recursively sort the 2 halves
 		sort(start, finalPivotPosition - 1);
 		sort(finalPivotPosition + 1, end);

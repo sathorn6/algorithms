@@ -46,22 +46,6 @@ export function quickselect<V>(
 		const finalPivotPosition = nextDestForLarger + 1;
 		swap(end, finalPivotPosition);
 
-		// Check for bugs
-		const smallerOrEqValues = array.slice(start, finalPivotPosition);
-		const largerValues = array.slice(finalPivotPosition + 1, end + 1);
-		for (const v of smallerOrEqValues) {
-			if (compare(v, pivotValue) > 0) {
-				throw new Error(`Invalid partial sorting because ${v} > ${pivotValue}`);
-			}
-		}
-		for (const v of largerValues) {
-			if (compare(v, pivotValue) <= 0) {
-				throw new Error(
-					`Invalid partial sorting because ${v} <= ${pivotValue}`
-				);
-			}
-		}
-
 		if (finalPivotPosition === k) {
 			// We found k
 			return array[finalPivotPosition];

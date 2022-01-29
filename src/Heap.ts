@@ -16,8 +16,6 @@ export class Heap<V> {
 	public push(element: V) {
 		this.data.push(element);
 		this.siftUp(this.data.length - 1);
-
-		this.checkHeapProperty();
 	}
 
 	/**
@@ -29,7 +27,6 @@ export class Heap<V> {
 		this.data[0] = element;
 		this.siftDown(0);
 
-		this.checkHeapProperty();
 		return top;
 	}
 
@@ -66,7 +63,6 @@ export class Heap<V> {
 		this.data[0] = lastElement!;
 		this.siftDown(0);
 
-		this.checkHeapProperty();
 		return minElement;
 	}
 
@@ -125,33 +121,6 @@ export class Heap<V> {
 		const lastParent = parent(this.data.length - 1);
 		for (let i = lastParent; i >= 0; i--) {
 			this.siftDown(i);
-		}
-
-		this.checkHeapProperty();
-	}
-
-	/**
-	 * Verify heap property for debugging purposes.
-	 */
-	private checkHeapProperty(index = 0) {
-		this.checkHeapPropertyForChild(index, leftChild);
-		this.checkHeapPropertyForChild(index, rightChild);
-	}
-
-	private checkHeapPropertyForChild(
-		index: number,
-		child: (index: number) => number
-	) {
-		if (child(index) < this.data.length) {
-			if (this.compare(this.data[index], this.data[child(index)]) > 0) {
-				console.log(this.data);
-				throw new Error(
-					`Heap property was violated because ${
-						this.data[index]
-					} is parent of ${this.data[child(index)]}.`
-				);
-			}
-			this.checkHeapProperty(child(index));
 		}
 	}
 }

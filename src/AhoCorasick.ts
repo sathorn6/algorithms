@@ -15,7 +15,7 @@ class Node {
 	/// Link to the longest suffix that is also a dictionary entry
 	public longestDictionarySuffix?: Node;
 
-	constructor(public char?: Char, public parent?: Node, public dbg?: string) {}
+	constructor(public char?: Char, public parent?: Node) {}
 
 	/// Iterate over suffixes from longest to shortest
 	public *suffixes(): Generator<Node> {
@@ -49,7 +49,7 @@ export class AhoCorasick {
 					current = current.children.get(char)!;
 				} else {
 					// Create node if it doesn't exist
-					const node = new Node(char, current, word.slice(0, i + 1));
+					const node = new Node(char, current);
 					current.children.set(char, node);
 					current = node;
 				}
