@@ -70,6 +70,7 @@ export class Market {
 
 		const openOtherOrders = this.openOrders[otherSide(order.side)];
 		while (newOrder.quantity) {
+			// Get the the next other order
 			const otherOrder = openOtherOrders.peekTop();
 			if (!otherOrder) {
 				break;
@@ -77,7 +78,9 @@ export class Market {
 
 			const [buyOrder, sellOrder] =
 				order.side === "buy" ? [newOrder, otherOrder] : [otherOrder, newOrder];
-			if (buyOrder.limit < sellOrder.limit) {
+
+			const canFill = buyOrder.limit >= sellOrder.limit;
+			if (!canFill) {
 				break;
 			}
 
@@ -104,7 +107,8 @@ export class Market {
 			}
 		}
 
-		if (order.type === "limit" && newOrder.quantity) {
+		const orderCompletelyFilled = newOrder.quantity === 0;
+		if (!orderCompletelyFilled && order.type === "limit") {
 			this.openOrders[order.side].push(newOrder);
 		}
 
