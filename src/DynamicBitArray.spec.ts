@@ -51,4 +51,14 @@ describe("DynamicBitArray", () => {
 
 		expect([...a.bits()]).toEqual([1, 0, 0, 1]);
 	});
+
+	it("can be turned into a string", () => {
+		const array = new DynamicBitArray();
+
+		array.push(1);
+		array.push(0);
+		array.push(1);
+
+		expect(array.toString()).toBe("101");
+	});
 });

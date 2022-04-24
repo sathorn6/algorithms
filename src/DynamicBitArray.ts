@@ -48,4 +48,8 @@ export class DynamicBitArray {
 			yield this.get(i);
 		}
 	}
+
+	public toString(): string {
+		return Array.from(this.bits()).join("");
+	}
 }
